@@ -51,7 +51,7 @@ class AndroidCatalogTest {
     fun isVirtualDeviceNullModel() {
         val mockDevice = mockk<AndroidDevice>()
         every { mockDevice.androidModelId } returns null
-        assertFalse(AndroidCatalog.isVirtualDevice(mockDevice, projectId))
+        assertTrue(AndroidCatalog.isVirtualDevice(mockDevice, projectId))
     }
 
     @Test
