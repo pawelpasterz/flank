@@ -22,7 +22,11 @@ jobs:
         with:
           submodules: true
 
-      - run: 'echo ${{ github }}'
+      - run: 'echo ${{ github.event_path }}'
+        
+      - run: 'echo ${{ github.ref }}'
+      
+      - run: 'echo ${{ GITHUB_REF }}'
         
       - run: 'echo ${{ github.event_name }}'
       
