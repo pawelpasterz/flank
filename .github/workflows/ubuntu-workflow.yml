@@ -11,7 +11,6 @@ on:
     paths:
       - '**'
       - '!flank-scripts/**'
-  workflow_dispatch:
   issue_comment:
     types: [ created ]
 
@@ -19,7 +18,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
       - run: 'echo ${{ github.event_name }}'
+      
       - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
@@ -27,12 +31,11 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      
       - id: should_run
         run: 'echo "::set-output name=run::true"'
         if: steps.check.outputs.triggered == 'true' || github.event_name == 'push' || github.event_name == 'pull_request'
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
+      
       - name: Display the java version
         run: java -version
         shell: bash
