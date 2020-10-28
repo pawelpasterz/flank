@@ -25,7 +25,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: re_run
         with:
-          route: POST /repos/pawelpasterz/flank/actions/runs/333473275/rerun
+          route: POST /repos/:repository/actions/runs/333473275/rerun
           repository: ${{ github.repository }}
           mediaType: | # The | is significant!
             previews: 
