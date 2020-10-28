@@ -23,6 +23,9 @@ jobs:
           submodules: true
 
       - run: |
+          echo ${{ toJson(github) }}
+          
+      - run: |
           cat ${{ github.event_path }}
         
       - run: 'echo ref ${{ github.ref }}'
