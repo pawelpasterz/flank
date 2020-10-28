@@ -22,7 +22,8 @@ jobs:
         with:
           submodules: true
 
-      - run: 'echo event_path ${{ fromJson(github.event_path) }}'
+      - run: |
+          echo "event_path ${{ fromJson(github.event_path) }}"
         
       - run: 'echo ref ${{ github.ref }}'
         
