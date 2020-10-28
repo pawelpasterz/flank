@@ -22,23 +22,11 @@ jobs:
         with:
           submodules: true
 
-      - run: 'echo ${{ github.event_path }}'
+      - run: 'echo event_path ${{ fromJson(github.event_path) }}'
         
-      - run: 'echo ${{ github.ref }}'
+      - run: 'echo ref ${{ github.ref }}'
         
-      - run: 'echo ${{ github.event_name }}'
-      
-      - uses: khan/pull-request-comment-trigger@master
-        id: check
-        with:
-          trigger: 'Test trigger'
-          reaction: rocket
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      
-      - id: should_run
-        run: 'echo "::set-output name=run::true"'
-        if: steps.check.outputs.triggered == 'true' || github.event_name == 'push' || github.event_name == 'pull_request'
+      - run: 'echo event_name ${{ github.event_name }}'
       
       - name: Display the java version
         run: java -version
