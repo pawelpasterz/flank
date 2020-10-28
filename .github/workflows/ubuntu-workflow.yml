@@ -23,7 +23,7 @@ jobs:
           submodules: true
 
       - run: |
-          cat github.event_path
+          cat ${{ github.event_path }}
         
       - run: 'echo ref ${{ github.ref }}'
         
