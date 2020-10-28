@@ -11,6 +11,7 @@ on:
     paths:
       - '**'
       - '!flank-scripts/**'
+  workflow_dispatch:
   issue_comment:
     types: [ created ]
 
