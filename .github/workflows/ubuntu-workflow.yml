@@ -11,7 +11,7 @@ on:
     paths:
       - '**'
       - '!flank-scripts/**'
-  issue_comment:
+  pull_request_review_comment:
     types: [ created ]
 
 jobs:
