@@ -25,8 +25,11 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: re_run
         with:
-          route: GET /repos/pawelpasterz/flank/actions/runs/333473275/rerun
+          route: POST /repos/pawelpasterz/flank/actions/runs/333473275/rerun
           repository: ${{ github.repository }}
+          mediaType: | # The | is significant!
+            previews: 
+              - antiope
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
