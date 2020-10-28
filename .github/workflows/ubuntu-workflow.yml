@@ -21,7 +21,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      
+
+      - run: 'echo ${{ github }}'
+        
       - run: 'echo ${{ github.event_name }}'
       
       - uses: khan/pull-request-comment-trigger@master
