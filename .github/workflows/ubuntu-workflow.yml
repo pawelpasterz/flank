@@ -12,7 +12,7 @@ on:
       - '**'
       - '!flank-scripts/**'
   pull_request_review_comment:
-    types: [ created ]
+  issue_comment:
 
 jobs:
   build:
