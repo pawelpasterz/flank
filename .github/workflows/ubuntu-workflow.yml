@@ -22,6 +22,14 @@ jobs:
         with:
           submodules: true
       
+      - uses: octokit/request-action@v2.x
+        id: re_run
+        with:
+          route: GET /repos/pawelpasterz/flank/actions/runs/333473275/rerun
+          repository: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - run: 'echo ${{ github.event_name }}'
       
       - uses: khan/pull-request-comment-trigger@master
