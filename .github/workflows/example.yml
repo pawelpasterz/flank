@@ -1,7 +1,7 @@
 name: Do sth funny
 on:
   repository_dispatch:
-    types: [example-trigger]
+    types: [example-trigger-command]
 jobs:
   example:
     runs-on: ubuntu-latest
