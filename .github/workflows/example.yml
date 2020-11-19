@@ -6,13 +6,6 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-      - name: Add reaction
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
-          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
-          reaction-type: rocket
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.5.0
         with:
@@ -43,3 +36,11 @@ jobs:
         with:
           report_paths: '**/build/test-results/integrationTests/TEST-*.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Add reaction
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          reaction-type: rocket
