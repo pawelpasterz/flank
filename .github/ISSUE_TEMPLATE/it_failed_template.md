@@ -6,5 +6,5 @@ labels: bug
 ---
 ### Integration Test failed on master 
 **Timestamp:** {{ env.RUN_DATE }}
-**Buildscan url for run [{{ env.RUN_ID }}](https://github.com/Flank/flank/actions/runs/{{ env.RUN_ID }})**
+**Buildscan url for run [{{ env.RUN_ID }}](https://github.com/pawelpasterz/flank/actions/runs/{{ env.RUN_ID }})**
 {{ env.BUILD_SCAN_URL }}
