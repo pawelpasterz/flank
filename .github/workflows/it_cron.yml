@@ -25,6 +25,13 @@ jobs:
           key: ubuntu-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ubuntu-gradle-
+            
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: 'YYYY-MM-DD HH:mm'
+          utcOffset: "+00:00"      
 
       - name: Gradle clean build
         uses: eskatos/gradle-command-action@v1
@@ -34,13 +41,6 @@ jobs:
           HEAD_REF: ${{ github.ref }}
         with:
           arguments: "clean build"
-      
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time
-        with:
-          format: 'YYYY-MM-DD HH:mm'
-          utcOffset: "+00:00"
           
       - uses: JasonEtco/create-an-issue@v2
         if: failure()
