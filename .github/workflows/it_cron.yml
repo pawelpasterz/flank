@@ -48,5 +48,7 @@ jobs:
           RUN_DATE: ${{ steps.current-time.outputs.formattedTime }}
           RUN_ID: ${{ github.run_id }}
           BUILD_SCAN_URL: ${{ steps.build.outputs.build-scan-url }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/it_failed_template.md
           
       
