@@ -43,6 +43,7 @@ jobs:
           utcOffset: "+00:00"
           
       - uses: JasonEtco/create-an-issue@v2
+        if: failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_DATE: ${{ steps.current-time.outputs.formattedTime }}
