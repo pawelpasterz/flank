@@ -48,7 +48,8 @@ jobs:
         run: |
           resp=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/pawelpasterz/flank/issues?creator=github-actions[bot]&state=open&labels=IT_Failed" | jq .)
           echo $resp
-          if [ $resp = "[]" ] then;
+          if [ $resp = "[]" ]
+          then
             echo "::set-output should_create=false"
           else
             echo "::set-output should_create=true"
