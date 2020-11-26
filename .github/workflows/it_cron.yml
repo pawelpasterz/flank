@@ -50,13 +50,13 @@ jobs:
           echo $resp
           if [ $resp = "[]" ]
           then
-            echo "::set-output should_create=true"
+            echo "::set-output name=should_create::true"
           else
-            echo "::set-output should_create=false"
+            echo "::set-output name=should_create::false"
           fi
           
       - uses: JasonEtco/create-an-issue@v2
-        if: ${{ steps.check-opened.outputs.should_create == true }}
+        if: ${{ steps.check-opened.outputs.should_create }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_DATE: ${{ steps.current-time.outputs.formattedTime }}
