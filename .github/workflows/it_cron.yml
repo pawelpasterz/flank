@@ -43,7 +43,7 @@ jobs:
           arguments: "clean test"
 
       - name: Check for opened issues
-        if: failure()
+        if: ${{ failure() }}
         id: check-opened
         run: |
           resp=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/pawelpasterz/flank/issues?creator=github-actions[bot]&state=open&labels=IT_Failed" | jq .)
@@ -55,7 +55,7 @@ jobs:
           echo "::set-output name=should_create::${SHOULD_RUN}"
           
       - uses: JasonEtco/create-an-issue@v2
-        if: ${{ steps.check-opened.outputs.should_create == 'true' }}
+        if: ${{ failure() && steps.check-opened.outputs.should_create == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_DATE: ${{ steps.current-time.outputs.formattedTime }}
