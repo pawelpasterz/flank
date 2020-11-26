@@ -52,6 +52,7 @@ jobs:
             echo "::set-output should_create=false"
           else
             echo "::set-output should_create=true"
+          fi
           
       - uses: JasonEtco/create-an-issue@v2
         if: ${{ steps.check-opened.outputs.should_create }}
