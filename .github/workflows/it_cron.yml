@@ -55,7 +55,7 @@ jobs:
           echo "::set-output name=should_creat::${SHOULD_RUN}"
           
       - uses: JasonEtco/create-an-issue@v2
-        if: ${{ steps.check-opened.outputs.should_create == 'true' }}
+        if: failure() && ${{ steps.check-opened.outputs.should_create == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_DATE: ${{ steps.current-time.outputs.formattedTime }}
