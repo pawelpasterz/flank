@@ -50,9 +50,9 @@ jobs:
           echo $resp
           if [ $resp = "[]" ]
           then
-            echo "::set-output should_create=false"
-          else
             echo "::set-output should_create=true"
+          else
+            echo "::set-output should_create=false"
           fi
           
       - uses: JasonEtco/create-an-issue@v2
