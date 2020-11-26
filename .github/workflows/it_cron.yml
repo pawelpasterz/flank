@@ -48,12 +48,11 @@ jobs:
         run: |
           resp=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/pawelpasterz/flank/issues?creator=github-actions[bot]&state=open&labels=IT_Failed" | jq .)
           echo $resp
-          if [ $resp = "[]" ]
-          then
-            echo "::set-output name=should_create::true"
-          else
-            echo "::set-output name=should_create::false"
+          SHOULD_RUN='false'
+          if [ $resp = "[]" ] then;
+            SHOULD_RUN='true'
           fi
+          echo "::set-output name=should_creat::${SHOULD_RUN}"
           
       - uses: JasonEtco/create-an-issue@v2
         if: ${{ steps.check-opened.outputs.should_create == 'true' }}
