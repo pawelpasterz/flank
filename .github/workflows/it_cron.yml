@@ -46,6 +46,7 @@ jobs:
 
   prepare-message:
     runs-on: ubuntu-latest
+    if: always()
     needs: [ run-it-full-suite ]
     outputs:
       issue-number: ${{ steps.check-opened.outputs.issue-number }}
