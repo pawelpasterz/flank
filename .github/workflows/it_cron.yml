@@ -81,7 +81,8 @@ jobs:
           echo "**Build scan URL:** ${{ needs.run-it-full-suite.outputs.build-scan-url }}" >> message.txt
           echo "**Commits since the last run:**" >> message.txt
           list=$(curl "https://api.github.com/repos/pawelpasterz/flank/commits?since=${{ steps.last-run-date.outputs.last-run-date }}" | jq ' .[] | .sha' -r)
-          if [ -z "$list" ]; then
+          if [ -z "$list" ]
+          then
             echo "No new commits" >> message.txt
           else
             echo "|commit SHA|PR|" >> message.txt
