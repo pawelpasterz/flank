@@ -45,6 +45,7 @@ jobs:
           echo "::set-output name=it-status::${{ job.status }}"
 
   prepare-message:
+    if: always()
     runs-on: ubuntu-latest
     needs: [ run-it-full-suite ]
     outputs:
@@ -128,7 +129,7 @@ jobs:
 
   create-issue:
     needs: [ prepare-message ]
-    if: needs.prepare-message.outputs.next-step == 'create'
+    if: always() && needs.prepare-message.outputs.next-step == 'create'
     runs-on: ubuntu-latest
     steps:
       - name: Creat an issue
@@ -146,7 +147,7 @@ jobs:
 
   close-issue:
     needs: [ prepare-message ]
-    if: needs.prepare-message.outputs.next-step == 'close'
+    if: always() && needs.prepare-message.outputs.next-step == 'close'
     runs-on: ubuntu-latest
     steps:
       - name: Close issue
@@ -157,7 +158,7 @@ jobs:
 
   add-comment:
     needs: [ prepare-message ]
-    if: needs.prepare-message.outputs.next-step == 'comment'
+    if: always() && needs.prepare-message.outputs.next-step == 'comment'
     runs-on: ubuntu-latest
     steps:
       - name: Add comment to existing issue
