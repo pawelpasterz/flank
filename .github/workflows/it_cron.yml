@@ -145,6 +145,7 @@ jobs:
           echo "### Integration Test failed on master" >> issue.md
 
       - name: Create Issue From File
+        id: create-issue
         uses: peter-evans/create-issue-from-file@v2
         with:
           title: Full Suite integration tests failed on master
