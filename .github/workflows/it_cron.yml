@@ -69,7 +69,7 @@ jobs:
       - name: Date of last run
         id: last-run-date
         run: |
-          resp=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/it_cron.yml/runs?per_page=2&page=1" | jq ' .workflow_runs | .[1] | .created_at' -r)
+          resp=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/it_cron.yml/runs?per_page=2&page=1" | jq ' [.workflow_runs | .[] | select(.status != "in_progress") | select(.conclusion != "cancelled")][0] | .created_at' -r)
           echo "::set-output name=last-run-date::${resp}"
 
       - name: Create failed message
@@ -86,10 +86,14 @@ jobs:
             echo "No new commits" >> message.txt
           else
             echo "|commit SHA|PR|" >> message.txt
-            echo "|---|---|" >> message.txt
+            echo "|---|:---:|" >> message.txt
             while IFS= read -r commit; do
               resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
-              echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))" >> message.txt
+              if [ -z "$resp" ]; then
+                echo "|${commit}|-|" >> message.txt
+              else
+                echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))|" >> message.txt
+              fi
             done <<< "$list"
           fi
 
