@@ -94,7 +94,7 @@ jobs:
           echo "**Timestamp:** ${{ steps.current-time.outputs.formattedTime }}" >> message.txt
           echo "**Job run:** [${{ github.run_id }}](https://github.com/pawelpasterz/flank/actions/runs/${{ github.run_id }})" >> message.txt
           echo "**Build scan URL:** ${{ needs.run-it-full-suite.outputs.build-scan-url }}" >> message.txt
-          echo "**Closing issue*
+          echo "**Closing issue**" >> message.txt
 
       - name: Make message body
         id: body
