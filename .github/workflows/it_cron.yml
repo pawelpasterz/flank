@@ -1,8 +1,8 @@
 name: IT cron
 
 on:
-  schedule:
-    - cron: '0 0 * * 1-5' # At 00:00 on every day-of-week from Monday through Friday
+  #schedule:
+  #  - cron: '0 0 * * 1-5' # At 00:00 on every day-of-week from Monday through Friday
   workflow_dispatch:    # or manually
 
 jobs:
@@ -100,7 +100,7 @@ jobs:
       - name: Create success message
         if: ${{ needs.run-it-full-suite.outputs.it-status == 'success' }}
         run: |
-          echo "### Full suit IT run :white_check_mark: SUCCEEDED :white_check_mark:" >> message.txt
+          echo "### Full suite IT run :white_check_mark: SUCCEEDED :white_check_mark:" >> message.txt
           echo "**Timestamp:** ${{ steps.current-time.outputs.formattedTime }}" >> message.txt
           echo "**Job run:** [${{ github.run_id }}](https://github.com/pawelpasterz/flank/actions/runs/${{ github.run_id }})" >> message.txt
           echo "**Build scan URL:** ${{ needs.run-it-full-suite.outputs.build-scan-url }}" >> message.txt
