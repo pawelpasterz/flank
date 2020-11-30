@@ -142,13 +142,13 @@ jobs:
 #          filename: .github/ISSUE_TEMPLATE/it_failed_template.md
       - name: Prepare template
         run: |
-          echo "### Integration Test failed on master" >> ~/issue.md
+          echo "### Integration Test failed on master" >> issue.md
 
       - name: Create Issue From File
         uses: peter-evans/create-issue-from-file@v2
         with:
           title: Full Suite integration tests failed on master
-          content-filepath: ~/issue.md
+          content-filepath: ./issue.md
           labels: bug, IT_Failed
 
       - name: Add comment to existing issue
