@@ -75,24 +75,27 @@ jobs:
       - name: Create failed message
         if: ${{ needs.run-it-full-suite.outputs.it-status == 'failure' }}
         run: |
-          echo "### Full suite IT run :x:FAILED:x:" >> message.txt
+          echo "### Full suite IT run :x: FAILED :x:" >> message.txt
           echo "**Timestamp:** ${{ steps.current-time.outputs.formattedTime }}" >> message.txt
           echo "**Job run:** [${{ github.run_id }}](https://github.com/pawelpasterz/flank/actions/runs/${{ github.run_id }})" >> message.txt
           echo "**Build scan URL:** ${{ needs.run-it-full-suite.outputs.build-scan-url }}" >> message.txt
           echo "**Commits since the last run:**" >> message.txt
-          echo "|commit SHA|PR|" >> message.txt
-          echo "|---|---|" >> message.txt
           list=$(curl "https://api.github.com/repos/pawelpasterz/flank/commits?since=${{ steps.last-run-date.outputs.last-run-date }}" | jq ' .[] | .sha' -r)
-          for commit in $list;
-          do
-            resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
-            echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))" >> message.txt
-          done
+          if [ -z "$list" ]; then
+          else
+            echo "|commit SHA|PR|" >> message.txt
+            echo "|---|---|" >> message.txt
+            for commit in $list;
+            do
+              resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
+              echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))" >> message.txt
+            done
+          fi
 
       - name: Create success message
         if: ${{ needs.run-it-full-suite.outputs.it-status == 'success' }}
         run: |
-          echo "### Full suit IT run :white_check_mark:SUCCEEDED:white_check_mark:" >> message.txt
+          echo "### Full suit IT run :white_check_mark: SUCCEEDED :white_check_mark:" >> message.txt
           echo "**Timestamp:** ${{ steps.current-time.outputs.formattedTime }}" >> message.txt
           echo "**Job run:** [${{ github.run_id }}](https://github.com/pawelpasterz/flank/actions/runs/${{ github.run_id }})" >> message.txt
           echo "**Build scan URL:** ${{ needs.run-it-full-suite.outputs.build-scan-url }}" >> message.txt
