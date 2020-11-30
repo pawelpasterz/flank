@@ -69,7 +69,7 @@ jobs:
       - name: Date of last run
         id: last-run-date
         run: |
-          resp=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/it_cron.yml/runs?per_page=1&page=1" | jq ' .workflow_runs | .[0] | .created_at')
+          resp=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/it_cron.yml/runs?per_page=1&page=1" | jq ' .workflow_runs | .[0] | .created_at')
           echo "::set-output name=last-run-date::${resp}"
 
       - name: Create failed message
@@ -80,7 +80,7 @@ jobs:
           echo "**Job run:** [${{ github.run_id }}](https://github.com/pawelpasterz/flank/actions/runs/${{ github.run_id }})" >> message.txt
           echo "**Build scan URL:** ${{ needs.run-it-full-suite.outputs.build-scan-url }}" >> message.txt
           echo "**Commits since the last run:**" >> message.txt
-          list=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} "https://api.github.com/repos/pawelpasterz/flank/commits?since=${{ steps.last-run-date.outputs.last-run-date }}" | jq ' .[] | .sha' -r)
+          list=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/commits?since=${{ steps.last-run-date.outputs.last-run-date }}" | jq ' .[] | .sha' -r)
           if [ -z "$list" ]
           then
             echo "No new commits" >> message.txt
@@ -88,7 +88,7 @@ jobs:
             echo "|commit SHA|PR|" >> message.txt
             echo "|---|---|" >> message.txt
             while IFS= read -r commit; do
-              resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
+              resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
               echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))"
             done <<< "$list"
           fi
