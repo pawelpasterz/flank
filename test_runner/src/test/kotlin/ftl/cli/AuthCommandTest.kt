@@ -25,7 +25,7 @@ class AuthCommandTest {
                 "  login"
         )
         assertThat(output).startsWith(
-            "Manage4 oauth2 credentials for Google Cloud\n\n" +
+            "Manage5 oauth2 credentials for Google Cloud\n\n" +
             "auth [COMMAND]\n" +
                 "Commands:\n" +
                 "  login"
