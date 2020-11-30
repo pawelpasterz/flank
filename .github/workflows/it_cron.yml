@@ -122,7 +122,7 @@ jobs:
           status=${{ needs.run-it-full-suite.outputs.it-status }}
           issue_number=${{ steps.check-opened.outputs.issue-number }}
           if [ "$status" == 'success' ]; then
-            if [ -z "$issue_number" ]; then
+            if [ "$issue_number" == null ]; then
               next_step='do-nothing'
             else
               next_step='close'
