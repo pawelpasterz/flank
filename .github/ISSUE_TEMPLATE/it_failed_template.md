@@ -1,10 +1,7 @@
 ---
 name: Full suite IT test report
 about: Report failed IT tests
-title: Full Suite integration tests failed on master [{{ env.RUN_DATE }}]
+title: Full Suite integration tests failed on master
 labels: bug, IT_Failed
 ---
-### Integration Test failed on master 
-**Timestamp:** {{ env.RUN_DATE }}
-**Buildscan url for run [{{ env.RUN_ID }}](https://github.com/pawelpasterz/flank/actions/runs/{{ env.RUN_ID }})**
-{{ env.BUILD_SCAN_URL }}
+### Integration Test failed on master
