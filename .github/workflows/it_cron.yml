@@ -89,7 +89,7 @@ jobs:
             echo "|---|---|" >> message.txt
             while IFS= read -r commit; do
               resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
-              echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))"
+              echo "|${commit}|[PR-$(echo $resp | jq .title -r)]($(echo $resp | jq .html_url -r))" >> message.txt
             done <<< "$list"
           fi
 
