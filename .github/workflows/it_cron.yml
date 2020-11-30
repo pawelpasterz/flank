@@ -111,7 +111,7 @@ jobs:
           next_step=''
           status=${{ needs.run-it-full-suite.outputs.it-status }}
           issue_number=${{ needs.prepare-message.outputs.issue-number }}
-          if [ "$status" == 'success']; then
+          if [ "$status" == 'success' ]; then
             if [ -z "$issue_number" ]; then
               next_step='do-nothing'
             else
