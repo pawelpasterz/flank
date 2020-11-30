@@ -133,17 +133,28 @@ jobs:
     if: always() && needs.prepare-message.outputs.next-step == 'create'
     runs-on: ubuntu-latest
     steps:
-      - name: Creat an issue
-        uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Creat an issue
+#        id: create-issue
+#        uses: JasonEtco/create-an-issue@v2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          filename: .github/ISSUE_TEMPLATE/it_failed_template.md
+      - name: Prepare template
+        run: |
+          echo "### Integration Test failed on master" >> ~/issue.md
+
+      - name: Create Issue From File
+        uses: peter-evans/create-issue-from-file@v2
         with:
-          filename: .github/ISSUE_TEMPLATE/it_failed_template.md
+          title: Full Suite integration tests failed on master
+          content-filepath: ~/issue.md
+          labels: bug, IT_Failed
 
       - name: Add comment to existing issue
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ needs.prepare-message.outputs.issue-number }}
+          issue-number: ${{ steps.create-issue.outputs.issue-number }}
           body: ${{ needs.prepare-message.outputs.message-body }}
 
   close-issue:
