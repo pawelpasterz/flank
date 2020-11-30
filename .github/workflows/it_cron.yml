@@ -46,7 +46,6 @@ jobs:
 
   prepare-message:
     runs-on: ubuntu-latest
-    if: always()
     needs: [ run-it-full-suite ]
     outputs:
       issue-number: ${{ steps.check-opened.outputs.issue-number }}
@@ -65,11 +64,11 @@ jobs:
           resp=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/pawelpasterz/flank/issues?creator=github-actions[bot]&state=open&labels=IT_Failed" | jq '.[0] | .number' -r)
           echo "::set-output name=issue-number::${resp}"
 
-      - name: Head SHA of last run
-        id: last-sha
+      - name: Date of last run
+        id: last-run-date
         run: |
-          resp=$(curl "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/it_cron.yml/runs?per_page=1&page=1" | jq ' .workflow_runs | .[0] | .head_sha' -r)
-          echo "::set-output name=last-sha::${resp}"
+          resp=$(curl "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/it_cron.yml/runs?per_page=1&page=1" | jq ' .workflow_runs | .[0] | .created_at')
+          echo "::set-output name=last-run-date::${resp}"
 
       - name: Create failed message
         if: ${{ needs.run-it-full-suite.outputs.it-status == 'failure' }}
@@ -81,7 +80,7 @@ jobs:
           echo "**Commits since the last run:**" >> message.txt
           echo "|commit SHA|PR|" >> message.txt
           echo "|---|---|" >> message.txt
-          list=$(git rev-list --ancestry-path ${{ steps.last-sha.outputs.last-sha }}..HEAD)
+          list=$(curl "https://api.github.com/repos/pawelpasterz/flank/commits?since=${{ steps.last-run-date.outputs.last-run-date }}" | jq ' .[] | .sha' -r)
           for commit in $list;
           do
             resp=$(curl -H "Accept: application/vnd.github.groot-preview+json" "https://api.github.com/repos/pawelpasterz/flank/commits/${commit}/pulls" | jq '.[] | {html_url, title}')
