@@ -128,7 +128,7 @@ jobs:
               next_step='close'
             fi
           else
-            if [ -z "$issue_number" ]; then
+            if [ "$issue_number" == null ]; then
               next_step='create'
             else
               next_step='comment'
