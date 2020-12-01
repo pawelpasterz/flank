@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: Run
         run: |
-          echo ${{ github }}
+          echo ${{ fromJson(github) }}
