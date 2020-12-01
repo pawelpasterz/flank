@@ -1,0 +1,12 @@
+name: Debug flow
+
+on:
+  workflow_dispatch:    # or manually
+
+jobs:
+  just_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        run: |
+          echo ${{ github }}
