@@ -1,0 +1,12 @@
+
+name: "Debug"
+on:
+  workflow_dispatch:
+
+jobs:
+  run-just:
+    runs-on: macos-latest
+    steps:
+      - name: Just run
+        run: |
+          echo $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/full_suite_integration_tests.yml/runs?per_page=20&page=1")
