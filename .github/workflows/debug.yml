@@ -10,3 +10,9 @@ jobs:
       - name: Just run
         run: |
           echo $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/full_suite_integration_tests.yml/runs?per_page=20&page=1")
+      - uses: actions/checkout@v2
+      - run: |
+          ./gradlew assemble
+          java -jar ./flank-scripts/build/libs/flank-scripts.jar shell firebase checkForSdkUpdate \
+          --github-token=${{ secrets.GITHUB_TOKEN }} \
+          --zenhub-token=${{ secrets.ZENHUB_API_KEY }}
