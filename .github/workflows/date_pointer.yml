@@ -1,0 +1,10 @@
+name: Date pointer
+on:
+  repository_dispatch:
+    types: [date-pointer]
+jobs:
+  point:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Pointer set: $(date +'%Y-%m-%d')"
