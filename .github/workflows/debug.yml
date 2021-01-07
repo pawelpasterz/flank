@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Just run
         run: |
-          echo $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/full_suite_integration_tests.yml/runs?per_page=20&page=1")
+          echo $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/date_pointer.yml/runs?per_page=20&page=1")
       - uses: actions/checkout@v2
       - run: |
           ./gradlew assemble
