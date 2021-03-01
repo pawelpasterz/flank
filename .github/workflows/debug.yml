@@ -17,7 +17,7 @@ jobs:
             "windows-latest": ${{ env.TEST_1 }},
             "windows-latest-bs": ${{ env.TEST_2 }}
           }'
-          echo "IT_RUN_STATE=$(echo $IT_RUN_STATE)" >>$GITHuB_ENV
+          echo "IT_RUN_STATE=$(echo $IT_RUN_STATE)" >>$GITHUB_ENV
       - name: Print state
         run: |
           echo "Printing"
