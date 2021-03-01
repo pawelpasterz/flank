@@ -7,18 +7,18 @@ jobs:
   run-just:
     runs-on: macos-latest
     steps:
-      - name: Update pointer
+      - name: Do sth
         run: |
-          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.PAT }}" "https://api.github.com/repos/pawelpasterz/flank/dispatches" -d '{"event_type":"date-pointer"}'
-      - name: Just run zerio
+          echo "TEST_1='eloelo'" >> $GITHUB_ENV
+          echo "TEST_2='blabla'" >> $GITHUB_ENV
+      - name: Get tests
         run: |
-          echo $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/debug.yml/runs?per_page=20&page=1")
-      - name: Just run
+          IT_RUN_STATE='{
+            "windows-latest": ${{ env.TEST_1 }},
+            "windows-latest-bs": ${{ env.TEST_2 }}
+          }'
+          echo "IT_RUN_STATE=$(echo $IT_RUN_STATE)" >>$GITHuB_ENV
+      - name: Print state
         run: |
-          echo $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/pawelpasterz/flank/actions/workflows/date_pointer.yml/runs?per_page=20&page=1")
-      - uses: actions/checkout@v2
-      - run: |
-          ./gradlew assemble
-          java -jar ./flank-scripts/build/libs/flank-scripts.jar shell firebase checkForSdkUpdate \
-          --github-token=${{ secrets.GITHUB_TOKEN }} \
-          --zenhub-token=${{ secrets.ZENHUB_API_KEY }}
+          echo "Printing"
+          echo ${{ env.IT_RUN_STATE }}
