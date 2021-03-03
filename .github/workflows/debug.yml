@@ -7,18 +7,8 @@ jobs:
   run-just:
     runs-on: macos-latest
     steps:
-      - name: Do sth
-        run: |
-          echo "TEST_1='eloelo'" >> $GITHUB_ENV
-          echo "TEST_2='blabla'" >> $GITHUB_ENV
-      - name: Get tests
-        run: |
-          IT_RUN_STATE='{
-            "windows-latest": "${{ env.TEST_1 }}",
-            "windows-latest-bs": "${{ env.TEST_2 }}"
-          }'
-          echo "IT_RUN_STATE=$(echo $IT_RUN_STATE)" >>$GITHUB_ENV
       - name: Print state
         run: |
           echo "Printing"
-          echo ${{ env.IT_RUN_STATE }}
+          echo ${{ env }}
+          echo ${{ toJSON(env) }}
