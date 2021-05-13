@@ -5,10 +5,13 @@ on:
 
 jobs:
   run-just:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-18.04 ]
     steps:
       - name: Print state
         run: |
           echo "Printing"
-          echo ${{ env }}
-          echo ${{ toJSON(env) }}
+          echo ${{ runner.os }}
+          echo ${{ matrix.os }}
